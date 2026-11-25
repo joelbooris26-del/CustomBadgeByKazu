@@ -19,7 +19,26 @@ GIF, optional link). Everyone running the plugin sees them, on either client.*
   Discord solo carga imágenes de algunas webs (Imgur, ImgBB, Pinterest y el CDN de Discord, entre otras).
   Con otras webs usa **Subir archivo**.
 
-## Instalación
+## Instalación fácil (Windows)
+
+1. Descarga [`Instalar.bat`](https://github.com/joelbooris26-del/CustomBadgeByKazu/raw/main/Instalar.bat)
+   (botón derecho > *Guardar enlace como*).
+2. Haz doble clic. Si Windows avisa de que es un archivo desconocido, pulsa *Más información > Ejecutar de todas formas*.
+3. Elige **Vencord** o **Equicord**, elige tu Discord y confirma.
+
+El instalador comprueba que tengas Node.js y Git (si faltan, los instala con `winget`), descarga el cliente y el
+plugin, lo compila, lo instala en tu Discord, activa el plugin y vuelve a abrir Discord. Tarda unos minutos.
+Todo lo que hace está en [`install.ps1`](install.ps1): puedes leerlo antes de ejecutarlo.
+
+- Es seguro ejecutarlo otra vez: sirve para **actualizar** el plugin o para **reinstalarlo** si Discord se actualiza
+  y deja de verse.
+- Tus ajustes de Vencord/Equicord no se borran.
+- Para desinstalar, borra la carpeta `CustomBadgeByKazu-install` de tu usuario y reinstala el cliente normal
+  desde su instalador oficial.
+
+Mac y Linux: usa la instalación manual de abajo.
+
+## Instalación manual (avanzado)
 
 Los plugins propios necesitan compilar el cliente desde su código fuente. Necesitas
 [Node.js](https://nodejs.org), [Git](https://git-scm.com) y `pnpm` (`npm i -g pnpm`).
