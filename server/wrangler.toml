@@ -1,0 +1,18 @@
+name = "custom-badge-kazu"
+main = "src/index.js"
+compatibility_date = "2026-01-01"
+
+[vars]
+# ID público de tu aplicación de Discord (Developer Portal > OAuth2).
+# Los secretos (DISCORD_CLIENT_SECRET, ADMIN_KEY, GITHUB_TOKEN) se guardan con "wrangler secret put", nunca aquí.
+DISCORD_CLIENT_ID = "PON_AQUI_TU_CLIENT_ID"
+# Repositorio público donde se publica badges.json (lo leen los clientes desde raw.githubusercontent.com).
+GITHUB_REPO = "TU_USUARIO/TU_REPO_DE_DATOS"
+
+[triggers]
+# Cada 2 minutos: si la lista cambió, se sube a GitHub.
+crons = ["*/2 * * * *"]
+
+[[kv_namespaces]]
+binding = "BADGES"
+id = "PON_AQUI_EL_ID_DE_TU_KV"
