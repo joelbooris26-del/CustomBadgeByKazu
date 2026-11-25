@@ -1,0 +1,72 @@
+name: Build prebuilt clients
+
+# Compila Vencord y Equicord con el plugin incluido y publica el resultado en la release "latest".
+# Así quien use Instalar.bat no necesita Node.js, Git ni compilar nada.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "plugin/**"
+      - ".github/workflows/build.yml"
+  schedule:
+    - cron: "17 5 * * *" # cada día: recoge las novedades de Vencord y Equicord
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - client: Vencord
+            repo: Vendicated/Vencord
+          - client: Equicord
+            repo: Equicord/Equicord
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: plugin-repo
+
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ matrix.repo }}
+          path: client
+
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: client/package.json
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Add the plugin
+        run: |
+          mkdir -p client/src/userplugins/customBadgeByKazu
+          cp plugin-repo/plugin/customBadgeByKazu/* client/src/userplugins/customBadgeByKazu/
+
+      - name: Build
+        working-directory: client
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm build
+
+      - name: Package
+        working-directory: client
+        run: zip -qr "../${{ matrix.client }}-dist.zip" dist -x '*.map'
+
+      - name: Publish to the "latest" release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create latest --repo "$GITHUB_REPOSITORY" --title "Latest build" \
+            --notes "Compilaciones automáticas de Vencord y Equicord con el plugin incluido. Las usa Instalar.bat." || true
+          gh release upload latest "${{ matrix.client }}-dist.zip" --clobber --repo "$GITHUB_REPOSITORY"

@@ -26,9 +26,11 @@ GIF, optional link). Everyone running the plugin sees them, on either client.*
 2. Haz doble clic. Si Windows avisa de que es un archivo desconocido, pulsa *Más información > Ejecutar de todas formas*.
 3. Elige **Vencord** o **Equicord**, elige tu Discord y confirma.
 
-El instalador comprueba que tengas Node.js y Git (si faltan, los instala con `winget`), descarga el cliente y el
-plugin, lo compila, lo instala en tu Discord, activa el plugin y vuelve a abrir Discord. Tarda unos minutos.
-Todo lo que hace está en [`install.ps1`](install.ps1): puedes leerlo antes de ejecutarlo.
+**No necesitas instalar nada más** (ni Node.js ni Git). El instalador descarga Vencord o Equicord ya compilados con el
+plugin incluido (los compila GitHub automáticamente, cada día y cada vez que cambia el plugin), usa el instalador
+oficial del cliente para parchear tu Discord, activa el plugin y vuelve a abrir Discord. Tarda menos de un minuto.
+Todo lo que hace está en [`install.ps1`](install.ps1): puedes leerlo antes de ejecutarlo. Las compilaciones se
+pueden revisar en la pestaña *Actions* de este repositorio y se descargan de *Releases*.
 
 - Es seguro ejecutarlo otra vez: sirve para **actualizar** el plugin o para **reinstalarlo** si Discord se actualiza
   y deja de verse.
@@ -39,6 +41,9 @@ Todo lo que hace está en [`install.ps1`](install.ps1): puedes leerlo antes de e
 Mac y Linux: usa la instalación manual de abajo.
 
 ## Instalación manual (avanzado)
+
+Si prefieres compilarlo tú mismo, `install-source.ps1` hace lo mismo pero compilando en tu equipo (necesita
+Node.js y Git; los instala con `winget` si faltan). O sigue estos pasos a mano:
 
 Los plugins propios necesitan compilar el cliente desde su código fuente. Necesitas
 [Node.js](https://nodejs.org), [Git](https://git-scm.com) y `pnpm` (`npm i -g pnpm`).
